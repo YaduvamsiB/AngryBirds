@@ -1,12 +1,16 @@
 class Ground {
-  constructor() {
-    this.ground = Bodies.rectangle(300, 580, 600, 10, { isStatic: true });
+  constructor(x, y, width, height) {
+    this.ground = Bodies.rectangle(x, y, width, height, { isStatic: true });
+    this.width = width;
+    this.height = height;
     World.add(myWorld, this.ground);
   }
   display() {
     rectMode(CENTER);
     fill("brown");
 
-    rect(300, 580, 600, 10);
+    var pos = this.ground.position;
+
+    rect(pos.x, pos.y, this.width, this.height);
   }
 }
