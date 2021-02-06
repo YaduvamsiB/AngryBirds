@@ -1,2 +1,6 @@
-# angryBirdsStage2.5
-Angry Birds stage 2.5 with Class Inheritance and Images
+# Angry Birds Game by Yaduvamsi
+
+We created one bird body
+then added image
+matter.js used
+we used inheritance and OOPs
