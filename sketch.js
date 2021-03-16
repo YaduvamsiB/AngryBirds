@@ -1,34 +1,3 @@
-//String
-var string = "This is a string";
-console.log(string);
-
-//Number
-var num = 150;
-console.log(num);
-
-//Boolean
-var bool = true;
-console.log(bool);
-
-//Undefined
-var undef;
-console.log(undef);
-
-// change data type, reassign data type
-undef = null;
-console.log(undef);
-
-var arr1 = [10, 20, 30, 40, 50];
-console.log(arr1[2]);
-
-var arr2 = ["name", num, true, arr1];
-console.log(arr2[3][4]);
-
-arr1.push("hello");
-console.log(arr1);
-arr1.pop();
-console.log(arr1);
-
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
@@ -41,8 +10,11 @@ var bird, slingshot;
 
 var gameState = "onSling";
 
+var bg, defaultbg;
+var score = 0;
 function preload() {
-  backgroundImg = loadImage("sprites/bg.png");
+  defaultbg = loadImage("sprites/bg.png");
+  getBackground();
 }
 
 function setup() {
@@ -75,7 +47,12 @@ function setup() {
 }
 
 function draw() {
-  background(backgroundImg);
+  if (bg) {
+    background(bg);
+  } else {
+    background(defaultbg);
+  }
+
   Engine.update(engine);
   //strokeWeight(4);
   box1.display();
@@ -97,6 +74,16 @@ function draw() {
   platform.display();
   //log6.display();
   slingshot.display();
+
+  pig1.score();
+  pig3.score();
+
+  console.log(score);
+
+  textSize(35);
+  fill("white");
+  noStroke();
+  text("Score: " + score, 900, 50);
 }
 
 function mouseDragged() {
@@ -113,6 +100,25 @@ function mouseReleased() {
 function keyPressed() {
   if (keyCode === 32) {
     slingshot.attach(bird.body);
-    gameState = "onSling";
+  }
+}
+
+// synchronous, asynchronous
+// async and await
+async function getBackground() {
+  var response = await fetch(
+    "http://worldtimeapi.org/api/timezone/Asia/Kolkata"
+  );
+  var responseJSON = await response.json();
+  var datetime = responseJSON.datetime;
+  console.log(datetime);
+
+  var time = datetime.slice(11, 13);
+  console.log(time);
+
+  if (time < 19 && time > 6) {
+    bg = loadImage("sprites/bg.png");
+  } else {
+    bg = loadImage("sprites/bg2.jpg");
   }
 }
